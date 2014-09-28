@@ -7,6 +7,7 @@ def getSpecModel(request):
 	modelname = request.GET.get('model')
 	mctrl = ModelController('')
 	response = mctrl.jsonmodel(modelname)
+	print response
 	return HttpResponse(response, content_type="application/json")
 
 def getRandom(request):
@@ -26,7 +27,7 @@ def validate(request):
 	topology = request.POST.get('topology')
 	print topology
 	mctrl = ModelController('')
-	#response = mctrl.validateTopology(topology,modelname)
+	response = mctrl.validateTopology(topology,modelname)
 	# topology = request.POST.get('topology')
 	# print topology
 	# mctrl = ModelController('')
