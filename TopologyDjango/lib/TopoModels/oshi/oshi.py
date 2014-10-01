@@ -26,17 +26,17 @@ class oshi():
 		self.layer_constraints["Data"] = { 
 			"not_allowed_edge":[
 				{"source":"CE", 
-				"not_allowed_des":[
+					"not_allowed_des":[
 						"OSHI-CR",  "OF Controller"] }, 
-					{"source":"OSHI-CR", 
-						"not_allowed_des":[
-							"CE", "OF Controller"] }, 
-					{"source":"OSHI-PE", 
-						"not_allowed_des":[
-							"CE", "OF Controller"] }, 
-					{"source":"OF Controller", 
-						"not_allowed_des":
-							["OSHI-CR"] } ]  }
+				{"source":"OSHI-CR", 
+					"not_allowed_des":[
+						"CE", "OF Controller"] }, 
+				{"source":"OSHI-PE", 
+					"not_allowed_des":[
+						"CE", "OF Controller"] }, 
+				{"source":"OF Controller", 
+					"not_allowed_des":
+						["OSHI-CR"] } ]  }
 
 		self.layer_constraints["Vll"] = {
          	"list_of_nodes_layer":["CE"],

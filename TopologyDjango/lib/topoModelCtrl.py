@@ -32,6 +32,7 @@ class ModelController():
 	"""docstring for ModelController"""
 	def __init__(self, arg):
 		#super(ModelController, self).__init__()
+		print ("ModelController_init", arg)
 		self.arg = arg
 
 	def validateTopology(self, topology, modelname):
@@ -43,18 +44,19 @@ class ModelController():
 		#print (model)
 		###validazione nodi
 		jsontopology = json.loads(topology)
-		print jsontopology
+		#print jsontopology
 		resvnodes = self.validateNodes(jsontopology['vertices'], model);
 
-		if("error" in resvnodes):
+		if(resvnodes.has_key('error')):
 			result.update(resvnodes)
-		
+		print "nodes validation end"
 
 		resvedges = self.validateEgdes(jsontopology, model);
-
-		if("error" in resvedges):
-			if("error" in result):
-				result.error.messages = result.error.messages + resvedges.error.messages
+		print "edges validation end"
+		print resvedges
+		if(resvedges.has_key('error')):
+			if(result.has_key('error')):
+				result['error']['messages'] = result['error']['messages'] + resvedges['error']['messages']
 			else:
 				result.update(resvedges)
 		 
@@ -65,19 +67,16 @@ class ModelController():
 	def validateNodes(self, nodes, model):
 		result = {}
 		messages = []
-		#print ("Ciao")
-		#print nodes['3']
-		#print ("Ciao")
 		#print model['list_of_all_node_types']
 		for n in nodes.keys():
 			try:
-				if(not nodes[n]['vertex_info']['node-type'] in model['list_of_all_node_types']):
+				if(not nodes[n]['vertex_info'].get('node-type',"") in model['list_of_all_node_types']):
 					messages.append({'Node-'+n : 'Node type not recognized by the model.'})
 				pass
 			except KeyError, e:
 				#raise e
 				#print e
-				messages.append({'Node-'+n : 'Node type not recognized by the model.'})
+				messages.append({'Node-'+n : 'Node properties not found.'})
 				
 
 		print messages
@@ -93,7 +92,34 @@ class ModelController():
 		edges = topology['edges']
 
 		for e in edges.keys():
-			print e
+			enodes = e.split('&&')
+			nodef = enodes[0]
+			nodet = enodes[1]
+			try:
+				typef = nodes[nodef]['vertex_info']['node-type']
+				typet = nodes[nodet]['vertex_info']['node-type']
+
+				for l in edges[e]['links']:
+					#print "@@@ "
+					#print l
+					##check node type not allowed
+					if(model['layer_constraints'][l['link-type']].has_key('list_of_nodes_layer')  and  len(model['layer_constraints'][l['link-type']]['list_of_nodes_layer'])):
+					 	if(typef not in model['layer_constraints'][l['link-type']]['list_of_nodes_layer']):
+							messages.append({'Edge-'+e : 'Node '+ nodef +' type '+typef+' not allowed.'})
+						if(typet not in model['layer_constraints'][l['link-type']]['list_of_nodes_layer']):
+							messages.append({'Edge-'+e : 'Node '+ nodet +' type '+typet+' not allowed.'})
+					
+					##check not allowed edge
+					if(model['layer_constraints'][l['link-type']]['not_allowed_edge'] is not None):
+						for n in model['layer_constraints'][l['link-type']]['not_allowed_edge']:
+							print typef, typet, n['source'], n['not_allowed_des']
+							if(n['source'] == typef and typet in n['not_allowed_des']):
+								messages.append({'Edge-'+e : 'Edge not allowed.'})
+				pass
+			except KeyError, error:
+				print "error male male", error
+				messages.append({'Edge-'+e : 'Egde properties '+str(error)+' not found.'})
+			#print nodef, nodet
 
 		if(len(messages) > 0):
 			result = {'error':{'messages': messages}}
