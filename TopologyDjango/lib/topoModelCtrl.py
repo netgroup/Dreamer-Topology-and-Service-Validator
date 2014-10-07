@@ -110,7 +110,7 @@ class ModelController():
 							messages.append({'Edge-'+e : 'Node '+ nodet +' type '+typet+' not allowed.'})
 					
 					##check not allowed edge
-					if(model['layer_constraints'][l['link-type']]['not_allowed_edge'] is not None):
+					if(model['layer_constraints'][l['link-type']].has_key('not_allowed_edge')):
 						for n in model['layer_constraints'][l['link-type']]['not_allowed_edge']:
 							print typef, typet, n['source'], n['not_allowed_des']
 							if(n['source'] == typef and typet in n['not_allowed_des']):
