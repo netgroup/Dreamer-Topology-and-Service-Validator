@@ -8,7 +8,9 @@ def getSpecModel(request):
 	mctrl = ModelController('')
 	response = mctrl.jsonmodel(modelname)
 	#print response
-	return HttpResponse(response, content_type="application/json")
+	response =  HttpResponse(response, content_type="application/json")
+    response["Access-Control-Allow-Origin"] = "*"
+    return response
 
 def getRandom(request):
 	response = {}
@@ -16,7 +18,9 @@ def getRandom(request):
 	p = request.GET.get('p')
 	builder = RandomBuilder(n,p)
 	response = builder.getJson()
-	return HttpResponse(response, content_type="application/json")
+	response =  HttpResponse(response, content_type="application/json")
+    response["Access-Control-Allow-Origin"] = "*"
+    return response
 
 
 def validate(request):
@@ -33,4 +37,6 @@ def validate(request):
 	# mctrl = ModelController('')
 	# response = mctrl.jsonmodel(modelname)
 	print response
-	return HttpResponse(json.dumps(response), content_type="application/json")
+	response =  HttpResponse(response, content_type="application/json")
+    response["Access-Control-Allow-Origin"] = "*"
+    return response
