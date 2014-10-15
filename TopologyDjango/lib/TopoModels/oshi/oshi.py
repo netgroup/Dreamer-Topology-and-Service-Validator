@@ -21,6 +21,24 @@ class oshi():
 
 		self.list_of_all_layer = ["Data", "Vll", "Control"]
 
+		self.nodes = {}
+
+		self.nodes["OSHI-CR"] = {
+			"node_label" : 'cro'
+		}
+
+		self.nodes["OSHI-PE"] = {
+			"node_label" : 'peo'
+		}
+
+		self.nodes["CE"] = {
+			"node_label" : 'cer'
+		}
+
+		self.nodes["OF Controller"] = {
+			"node_label" : 'ctr'
+		}
+
 		self.layer_constraints = {}
 
 		self.layer_constraints["Data"] = { 
