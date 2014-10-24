@@ -76,7 +76,7 @@ class oshi():
 		self.nodes["OF Controller"] = {
 			"node_label" : 'ctr',
 			"properties": {
-				"tcp_port": "'6633'",
+				"tcp_port": "6633",
 				"vm":{
 						"mgt_ip": "",
 						"interfaces": ""
