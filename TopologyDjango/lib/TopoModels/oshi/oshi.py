@@ -63,7 +63,6 @@ class oshi():
 		self.nodes["CE"] = {
 			"node_label" : 'cer',
 			"properties": {
-				"loopback": "",
 				"vm":{
 						"mgt_ip": "",
 						"interfaces": ""
@@ -78,7 +77,6 @@ class oshi():
 			"node_label" : 'ctr',
 			"properties": {
 				"tcp_port": "",
-				"loopback": "",
 				"vm":{
 						"mgt_ip": "",
 						"interfaces": ""
