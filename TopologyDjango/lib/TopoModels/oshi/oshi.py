@@ -40,7 +40,7 @@ class oshi():
 						"interfaces": ""
 				},
 				"domain-oshi":{
-					"cluster_id": ""
+
 				}
 
 			}
@@ -55,7 +55,7 @@ class oshi():
 						"interfaces": ""
 				},
 				"domain-oshi":{
-					"cluster_id": ""
+
 				}	
 			}
 		}
@@ -66,10 +66,7 @@ class oshi():
 				"vm":{
 						"mgt_ip": "",
 						"interfaces": ""
-				},
-				"domain-oshi":{
-					"cluster_id": ""
-				}	
+				}
 			}
 		}
 
@@ -82,7 +79,7 @@ class oshi():
 						"interfaces": ""
 				},
 				"domain-oshi":{
-					"cluster_id": ""
+
 				}
 			}
 		}
@@ -97,7 +94,7 @@ class oshi():
 						"OSHI-CR",  "OF Controller"] }, 
 				{"source":"OSHI-CR", 
 					"not_allowed_des":[
-						"CE", "OF Controller"] }, 
+						"CE"] }, 
 				{"source":"OSHI-PE", 
 					"not_allowed_des":[
 						"CE", "OF Controller"] }, 
@@ -125,7 +122,11 @@ class oshi():
                 	"not_allowed_des": ["OSHI-CR", "OSHI-PE", "CE", "OF Controller"] }
                 	 ],
             "changing_nodes_type":"false",
-            "insert_new_node":"false"} 
+            "insert_new_node":"false",
+            "nodes-properties":{
+						"cluster_id": ""
+				}
+			} 
 
 
 #if __name__ == '__main__':
