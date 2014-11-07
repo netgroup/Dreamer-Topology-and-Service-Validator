@@ -34,6 +34,7 @@ class oshi():
 		self.nodes["OSHI-CR"] = {
 			"node_label" : 'cro',
 			"properties": {
+				"custom_label" : "",
 				"loopback": "",
 				"vm":{
 						"mgt_ip": "",
@@ -49,6 +50,7 @@ class oshi():
 		self.nodes["OSHI-PE"] = {
 			"node_label" : 'peo',
 			"properties": {
+			"custom_label" : "",
 				"loopback": "",
 				"vm":{
 						"mgt_ip": "",
@@ -63,6 +65,7 @@ class oshi():
 		self.nodes["CE"] = {
 			"node_label" : 'cer',
 			"properties": {
+			"custom_label" : "",
 				"vm":{
 						"mgt_ip": "",
 						"interfaces": ""
@@ -73,6 +76,7 @@ class oshi():
 		self.nodes["OF Controller"] = {
 			"node_label" : 'ctr',
 			"properties": {
+			"custom_label" : "",
 				"tcp_port": "6633",
 				"vm":{
 						"mgt_ip": "",
