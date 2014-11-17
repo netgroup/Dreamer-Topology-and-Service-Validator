@@ -104,7 +104,11 @@ class oshi():
 						"CE", "OF Controller"] }, 
 				{"source":"OF Controller", 
 					"not_allowed_des":
-						["OSHI-PE", "CE", "OF Controller"] } ]  }
+						["OSHI-PE", "CE", "OF Controller"] } ],
+			"edges-properties": {
+				"bw": ""
+			  }
+			}
 
 		self.layer_constraints["Vll"] = {
          	"list_of_nodes_layer":["CE"],
