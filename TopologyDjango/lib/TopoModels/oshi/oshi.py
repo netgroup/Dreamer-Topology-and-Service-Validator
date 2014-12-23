@@ -19,7 +19,7 @@ class oshi():
 
 		self.list_of_all_node_types = ["OSHI-CR", "OSHI-PE", "CE", "OF Controller"]
 
-		self.list_of_all_layer = ["Data", "Vll", "Control"]
+		self.list_of_all_layer = ["Data", "Vll", "PW", "Control"]
 
 		self.graph_parameters = {
 			"tunneling": "",
@@ -114,6 +114,11 @@ class oshi():
          	"list_of_nodes_layer":["CE"],
          	"changing_nodes_type":'false',
          	"insert_new_node":'false' }
+		self.layer_constraints["PW"] = {
+			"list_of_nodes_layer":["CE"],
+			"changing_nodes_type":'false',
+         	"insert_new_node" : 'false'
+        }
 
 		self.layer_constraints['Control'] = {
         	"list_of_nodes_layer":[
@@ -134,9 +139,7 @@ class oshi():
             "nodes-properties":{
 						"cluster_id": ""
 				}
-			} 
-
-
+			}
 #if __name__ == '__main__':
 #	test = oshi('ciao')
 #	print test.to_JSON()
