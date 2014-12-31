@@ -22,8 +22,8 @@ class openflow():
 		self.list_of_all_layer = ["Data",  "Control"]
 
 		self.graph_parameters = {
-			"tunneling": "",
-			"testbed": "",
+			"tunneling": "OPENVPN",
+			"testbed": "MININET",
 			"mapped": "",
 			"vlan":"",
 			"generated":""

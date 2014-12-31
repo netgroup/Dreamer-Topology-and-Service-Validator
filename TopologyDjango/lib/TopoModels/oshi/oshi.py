@@ -22,8 +22,8 @@ class oshi():
 		self.list_of_all_layer = ["Data", "Vll", "PW", "Control"]
 
 		self.graph_parameters = {
-			"tunneling": "",
-			"testbed": "",
+			"tunneling": "OPENVPN",
+			"testbed": "MININET",
 			"mapped": "",
 			"vlan":"",
 			"generated":""
