@@ -17,9 +17,9 @@ class oshi():
 		
 		self.model_name = 'oshi'
 
-		self.list_of_all_node_types = ["OSHI-CR", "OSHI-PE", "CE", "OF Controller"]
+		self.list_of_all_node_types = ["OSHI-CR", "OSHI-PE", "CE", "L2sw", "OF Controller"]
 
-		self.list_of_all_layer = ["Data", "Vll", "PW", "Control"]
+		self.list_of_all_layer = ["Data", "Vll", "PW", "VS", "Control"]
 
 		self.graph_parameters = {
 			"tunneling": "OPENVPN",
@@ -44,6 +44,17 @@ class oshi():
 
 				}
 
+			}
+		}
+
+		self.nodes["L2sw"] = {
+			"node_label" : 'l2sw',
+			"properties": {
+			"custom_label" : "",
+				"vm":{
+						"mgt_ip": "",
+						"interfaces": ""
+				}
 			}
 		}
 
@@ -91,6 +102,7 @@ class oshi():
 		self.layer_constraints = {}
 
 		self.layer_constraints["Data"] = {
+			"list_of_nodes_layer":["OSHI-CR", "OSHI-PE", "CE", "OF Controller"],
             "multihoming": "false",
 			"not_allowed_edge":[
 				{"source":"CE", 
@@ -108,12 +120,13 @@ class oshi():
 			"edges-properties": {
 				"bw": ""
 			  }
-			}
+		}
 
 		self.layer_constraints["Vll"] = {
          	"list_of_nodes_layer":["CE"],
          	"changing_nodes_type":'false',
          	"insert_new_node":'false' }
+
 		self.layer_constraints["PW"] = {
 			"list_of_nodes_layer":["CE"],
 			"changing_nodes_type":'false',
@@ -132,14 +145,19 @@ class oshi():
              	{"source":"OSHI-PE",
                 	"not_allowed_des": ["OSHI-CR", "OSHI-PE", "CE", "OF Controller"] },
                 {"source":"OF Controller",
-                	"not_allowed_des": ["OSHI-CR", "OSHI-PE", "CE", "OF Controller"] }
-                	 ],
+                	"not_allowed_des": ["OSHI-CR", "OSHI-PE", "CE", "OF Controller"] }],
             "changing_nodes_type":"false",
             "insert_new_node":"false",
             "nodes-properties":{
 						"cluster_id": ""
 				}
-			}
+		}
+		
+		self.layer_constraints['VS'] = {
+			"list_of_nodes_layer" :["L2sw", "CE"],
+			"not_allowed_edge":[{"source" : "CE", "not_allowed_des": ["OSHI-CR", "CE", "OSHI-PE", "OF Controller"]},
+			{"source" : "L2sw", "not_allowed_des": ["OSHI-CR", "OSHI-PE", "L2sw", "OF Controller"]}],
+		}
 #if __name__ == '__main__':
 #	test = oshi('ciao')
 #	print test.to_JSON()
