@@ -157,6 +157,7 @@ class oshi():
 			"list_of_nodes_layer" :["L2sw", "CE"],
 			"not_allowed_edge":[{"source" : "CE", "not_allowed_des": ["OSHI-CR", "CE", "OSHI-PE", "OF Controller"]},
 			{"source" : "L2sw", "not_allowed_des": ["OSHI-CR", "OSHI-PE", "L2sw", "OF Controller"]}],
+			"changing_nodes_type": "false"
 		}
 #if __name__ == '__main__':
 #	test = oshi('ciao')
