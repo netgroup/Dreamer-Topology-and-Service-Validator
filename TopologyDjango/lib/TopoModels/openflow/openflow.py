@@ -9,7 +9,9 @@ class openflow():
 	def to_JSON(self):
 		return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True)
 	
-
+	def validate(self, topology):
+		result = {}
+		return result
 
 	"""docstring for OpenFlow"""
 	def __init__(self, arg):

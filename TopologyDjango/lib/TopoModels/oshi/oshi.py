@@ -1,5 +1,6 @@
 import json
 import pkgutil
+import re
 
 class oshi():
 
@@ -9,6 +10,40 @@ class oshi():
 	def to_JSON(self):
 		return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True)
 	
+	def validate(self, topology):
+		print "validate oshi"
+		result = {}
+		messages = []
+		
+		nodes = topology['vertices']
+		edges = topology['edges']
+		mappl2sw = {}
+		
+		for n in nodes.keys():
+			if(nodes[n]['vertex_info'].get('node-type',"") == "L2sw"):
+				mappl2sw[n] = 0
+
+		### verifica che ogni nodo l2sw ha almeno tre CER
+		for e in edges.keys():
+			enodes = e.split('&&')
+			nodef = enodes[0]
+			nodet = enodes[1]
+			for l in edges[e]['links']:
+				if( l['link-type'] == "VS"):
+					if(nodes[nodef]['vertex_info'].get('node-type',"") == "L2sw"):
+						l2sw = nodef
+					elif(nodes[nodet]['vertex_info'].get('node-type',"") == "L2sw"):
+						l2sw = nodet
+
+					mappl2sw[l2sw] = mappl2sw[l2sw] + 1
+
+		for m in mappl2sw.keys():
+			if(mappl2sw[m] < 3):
+				messages.append({m: "connected with less than three CER"})
+		if(len(messages) > 0):
+			result = {'error':{'messages': messages}}
+		
+		return result
 
 
 	"""docstring for Oshi"""
@@ -24,7 +59,7 @@ class oshi():
 		self.graph_parameters = {
 			"tunneling": "OPENVPN",
 			"testbed": "MININET",
-			"mapped": "",
+			"mappl2swed": "",
 			"vlan":"",
 			"generated":""
 		}

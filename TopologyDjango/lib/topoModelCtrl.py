@@ -3,9 +3,11 @@ import sys
 import os
 import imp
 import json
+import re
 #from TopoModels.oshi.oshi import oshi
 
 class ModelController():
+
 
 	
 
@@ -21,13 +23,13 @@ class ModelController():
 		except AttributeError, e:
 			print "AttributeError!"
 			return json.dumps({ 'error': {'message': 'Model Spec not found'} })
-		a = cls('')
+		self.a = cls('')
 		#if(modelname == 'oshi'):
 		#	a = oshi('')
 		#else:
 		#	return {}
 	
-		return a.to_JSON()
+		return self.a.to_JSON()
 
 	"""docstring for ModelController"""
 	def __init__(self, arg):
@@ -58,10 +60,16 @@ class ModelController():
 				result['error']['messages'] = result['error']['messages'] + resvedges['error']['messages']
 			else:
 				result.update(resvedges)
-		 
-
-
+		resmodel = self.a.validate(jsontopology)
+		if(resmodel.has_key('error')):
+			if(result.has_key('error')):
+				result['error']['messages'] = result['error']['messages'] + resmodel['error']['messages']
+			else:
+				result.update(resmodel)
+		
 		return result
+
+
 
 	def validateNodes(self, nodes, model):
 		result = {}
