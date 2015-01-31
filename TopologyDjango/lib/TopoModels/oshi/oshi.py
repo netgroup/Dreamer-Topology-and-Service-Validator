@@ -59,7 +59,7 @@ class oshi():
 		self.graph_parameters = {
 			"tunneling": "OPENVPN",
 			"testbed": "MININET",
-			"mappl2swed": "",
+			"mapped": "",
 			"vlan":"",
 			"generated":""
 		}
