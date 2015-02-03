@@ -17,28 +17,28 @@ class oshi():
 		
 		nodes = topology['vertices']
 		edges = topology['edges']
-		mappl2sw = {}
+		mappVS = {}
 		
 		for n in nodes.keys():
-			if(nodes[n]['vertex_info'].get('node-type',"") == "L2sw"):
-				mappl2sw[n] = 0
+			if(nodes[n]['vertex_info'].get('node-type',"") == "VS"):
+				mappVS[n] = 0
 
-		### verifica che ogni nodo l2sw ha almeno tre CER
+		### verifica che ogni nodo VS ha almeno tre CER
 		for e in edges.keys():
 			enodes = e.split('&&')
 			nodef = enodes[0]
 			nodet = enodes[1]
 			for l in edges[e]['links']:
 				if( l['link-type'] == "VS"):
-					if(nodes[nodef]['vertex_info'].get('node-type',"") == "L2sw"):
-						l2sw = nodef
-					elif(nodes[nodet]['vertex_info'].get('node-type',"") == "L2sw"):
-						l2sw = nodet
+					if(nodes[nodef]['vertex_info'].get('node-type',"") == "VS"):
+						VS = nodef
+					elif(nodes[nodet]['vertex_info'].get('node-type',"") == "VS"):
+						VS = nodet
 
-					mappl2sw[l2sw] = mappl2sw[l2sw] + 1
+					mappVS[VS] = mappVS[VS] + 1
 
-		for m in mappl2sw.keys():
-			if(mappl2sw[m] < 3):
+		for m in mappVS.keys():
+			if(mappVS[m] < 3):
 				messages.append({m: "connected with less than three CER"})
 		if(len(messages) > 0):
 			result = {'error':{'messages': messages}}
@@ -52,7 +52,7 @@ class oshi():
 		
 		self.model_name = 'oshi'
 
-		self.list_of_all_node_types = ["OSHI-CR", "OSHI-PE", "CE", "L2sw", "OF Controller"]
+		self.list_of_all_node_types = ["OSHI-CR", "OSHI-PE", "CE", "VS", "OF Controller"]
 
 		self.list_of_all_layer = ["Data", "Vll", "PW", "VS", "Control"]
 
@@ -82,8 +82,8 @@ class oshi():
 			}
 		}
 
-		self.nodes["L2sw"] = {
-			"node_label" : 'l2sw',
+		self.nodes["VS"] = {
+			"node_label" : 'vs',
 			"properties": {
 			"custom_label" : "",
 				"vm":{
@@ -189,9 +189,9 @@ class oshi():
 		}
 		
 		self.layer_constraints['VS'] = {
-			"list_of_nodes_layer" :["L2sw", "CE"],
+			"list_of_nodes_layer" :["VS", "CE"],
 			"not_allowed_edge":[{"source" : "CE", "not_allowed_des": ["OSHI-CR", "CE", "OSHI-PE", "OF Controller"]},
-			{"source" : "L2sw", "not_allowed_des": ["OSHI-CR", "OSHI-PE", "L2sw", "OF Controller"]}],
+			{"source" : "VS", "not_allowed_des": ["OSHI-CR", "OSHI-PE", "VS", "OF Controller"]}],
 			"changing_nodes_type": "false"
 		}
 #if __name__ == '__main__':
