@@ -106,6 +106,7 @@ class ModelController():
 				typef = nodes[nodef]['vertex_info']['node-type']
 				typet = nodes[nodet]['vertex_info']['node-type']
 
+				linkscounter = {}
 				for l in edges[e]['links']:
 					#print "@@@ "
 					#print l
@@ -122,7 +123,15 @@ class ModelController():
 							print typef, typet, n['source'], n['not_allowed_des']
 							if(n['source'] == typef and typet in n['not_allowed_des']):
 								messages.append({'Edge-'+e : 'Edge not allowed.'})
+					if(not linkscounter.has_key(l['link-type'])):
+						linkscounter[l['link-type']] = 0
+					linkscounter[l['link-type']] += 1
 				pass
+				print linkscounter
+				for t in linkscounter.keys():
+					print model['layer_constraints'][t]
+					if(model['layer_constraints'][t].has_key('multilink') and model['layer_constraints'][t]['multilink'] == 'false' and linkscounter[t] > 1):
+						messages.append({'Edge-'+e : 'Multilink in ' + t + ' not allowed.'})
 			except KeyError, error:
 				print "error male male", error
 				messages.append({'Edge-'+e : 'Egde properties '+str(error)+' not found.'})

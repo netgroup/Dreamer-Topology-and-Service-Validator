@@ -85,11 +85,7 @@ class oshi():
 		self.nodes["VS"] = {
 			"node_label" : 'vs',
 			"properties": {
-			"custom_label" : "",
-				"vm":{
-						"mgt_ip": "",
-						"interfaces": ""
-				}
+				"custom_label" : ""
 			}
 		}
 
@@ -192,7 +188,8 @@ class oshi():
 			"list_of_nodes_layer" :["VS", "CE"],
 			"not_allowed_edge":[{"source" : "CE", "not_allowed_des": ["OSHI-CR", "CE", "OSHI-PE", "OF Controller"]},
 			{"source" : "VS", "not_allowed_des": ["OSHI-CR", "OSHI-PE", "VS", "OF Controller"]}],
-			"changing_nodes_type": "false"
+			"changing_nodes_type": 'false',
+			"multilink":'false'
 		}
 #if __name__ == '__main__':
 #	test = oshi('ciao')
