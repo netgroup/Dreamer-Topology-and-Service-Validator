@@ -3,11 +3,13 @@
 Dreamer-Topology-and-Service-Validator
 =======================================
 
-Topology and Service Validator For Dreamer Project (GÉANT Open Call).
+Topology and Service Validator, it is a server-side component of the [Mantoo suite](https://github.com/netgroup/Dreamer-Mantoo), a result of the [DREAMER project](http://netgroup.uniroma2.it/DREAMER/).
+
+Addtional documentation is available at http://netgroup.uniroma2.it/OSHI/
 
 Overview
 -----------
-It is a [django](https://www.djangoproject.com/) app that stores the model/layer abstractions and their constraints, finally it is able to validate the topologies created through the [Dreamer-Topology-Designer](https://github.com/netgroup/Dreamer-Topology-Designer) project.
+It is a [django](https://www.djangoproject.com/) app that stores the model/layer abstractions and their constraints, and it is able to validate the topologies created through the [Dreamer-Topology3D](https://github.com/netgroup/Dreamer-Topology3D) project.
 
 ---------------------------
 
