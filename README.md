@@ -1,9 +1,9 @@
-![Alt text](repo_data/dreamer-logo.png "Optional title")
+![OSHI and DREAMER logos](http://netgroup.uniroma2.it/twiki/pub/Oshi/WebHome/dreamer-oshi-logo-github.png "http://netgroup.uniroma2.it/OSHI")
 
 Dreamer-Topology-and-Service-Validator
 =======================================
 
-Topology and Service Validator, it is a server-side component of the [Mantoo suite](https://github.com/netgroup/Dreamer-Mantoo), a result of the [DREAMER project](http://netgroup.uniroma2.it/DREAMER/).
+Topology and Service Validator, it is a server-side component of the [Mantoo suite](https://github.com/netgroup/Dreamer-Mantoo), a result of the [DREAMER project](http://netgroup.uniroma2.it/DREAMER/). It is used together with the Topology3D web GUI.
 
 Addtional documentation is available at http://netgroup.uniroma2.it/OSHI/
 
