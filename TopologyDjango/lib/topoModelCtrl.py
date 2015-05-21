@@ -77,7 +77,7 @@ class ModelController():
 		#print model['list_of_all_node_types']
 		for n in nodes.keys():
 			try:
-				if(not nodes[n]['vertex_info'].get('node-type',"") in model['list_of_all_node_types']):
+				if(not nodes[n]['info'].get('type',"") in model['list_of_all_node_types']):
 					messages.append({'Node-'+n : 'Node type not recognized by the model.'})
 				pass
 			except KeyError, e:
@@ -103,29 +103,29 @@ class ModelController():
 			nodef = enodes[0]
 			nodet = enodes[1]
 			try:
-				typef = nodes[nodef]['vertex_info']['node-type']
-				typet = nodes[nodet]['vertex_info']['node-type']
+				typef = nodes[nodef]['info']['type']
+				typet = nodes[nodet]['info']['type']
 
 				linkscounter = {}
 				for l in edges[e]['links']:
 					#print "@@@ "
 					#print l
 					##check node type not allowed
-					if(model['layer_constraints'][l['link-type']].has_key('list_of_nodes_layer')  and  len(model['layer_constraints'][l['link-type']]['list_of_nodes_layer'])):
-					 	if(typef not in model['layer_constraints'][l['link-type']]['list_of_nodes_layer']):
+					if(model['layer_constraints'][l['view']].has_key('list_of_nodes_layer')  and  len(model['layer_constraints'][l['view']]['list_of_nodes_layer'])):
+					 	if(typef not in model['layer_constraints'][l['view']]['list_of_nodes_layer']):
 							messages.append({'Edge-'+e : 'Node '+ nodef +' type '+typef+' not allowed.'})
-						if(typet not in model['layer_constraints'][l['link-type']]['list_of_nodes_layer']):
+						if(typet not in model['layer_constraints'][l['view']]['list_of_nodes_layer']):
 							messages.append({'Edge-'+e : 'Node '+ nodet +' type '+typet+' not allowed.'})
 					
 					##check not allowed edge
-					if(model['layer_constraints'][l['link-type']].has_key('not_allowed_edge')):
-						for n in model['layer_constraints'][l['link-type']]['not_allowed_edge']:
+					if(model['layer_constraints'][l['view']].has_key('not_allowed_edge')):
+						for n in model['layer_constraints'][l['view']]['not_allowed_edge']:
 							print typef, typet, n['source'], n['not_allowed_des']
 							if(n['source'] == typef and typet in n['not_allowed_des']):
 								messages.append({'Edge-'+e : 'Edge not allowed.'})
-					if(not linkscounter.has_key(l['link-type'])):
-						linkscounter[l['link-type']] = 0
-					linkscounter[l['link-type']] += 1
+					if(not linkscounter.has_key(l['view'])):
+						linkscounter[l['view']] = 0
+					linkscounter[l['view']] += 1
 				pass
 				print linkscounter
 				for t in linkscounter.keys():

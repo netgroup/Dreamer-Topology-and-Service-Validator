@@ -20,7 +20,7 @@ class oshi():
 		mappVS = {}
 		
 		for n in nodes.keys():
-			if(nodes[n]['vertex_info'].get('node-type',"") == "VS"):
+			if(nodes[n]['info'].get('type',"") == "VS"):
 				mappVS[n] = 0
 
 		### verifica che ogni nodo VS ha almeno tre CER
@@ -29,10 +29,10 @@ class oshi():
 			nodef = enodes[0]
 			nodet = enodes[1]
 			for l in edges[e]['links']:
-				if( l['link-type'] == "VS"):
-					if(nodes[nodef]['vertex_info'].get('node-type',"") == "VS"):
+				if( l['view'] == "VS"):
+					if(nodes[nodef]['info'].get('type',"") == "VS"):
 						VS = nodef
-					elif(nodes[nodet]['vertex_info'].get('node-type',"") == "VS"):
+					elif(nodes[nodet]['info'].get('type',"") == "VS"):
 						VS = nodet
 
 					mappVS[VS] = mappVS[VS] + 1

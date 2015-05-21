@@ -14,9 +14,9 @@ class RandomBuilder():
 		g = nx.erdos_renyi_graph(self.n, self.p)
 
 		for i in g.nodes():
-			self.vertices[i] = { 'vertex_info':{'frozen': False}}
+			self.vertices[i] = { 'info':{'frozen': False}}
 		for (n1, n2) in g.edges():
-			self.edges[str(n1)+"&&"+str(n2)] = {'links':[{'link-type':'Data'}]}
+			self.edges[str(n1)+"&&"+str(n2)] = {'links':[{'view':'Data'}]}
 
 		#print(g.nodes())
 		#print(g.edges())
