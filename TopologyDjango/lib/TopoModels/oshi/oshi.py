@@ -40,7 +40,7 @@ class oshi():
 
 		for m in mappVS.keys():
 			if(mappVS[m] < N):
-				messages.append({m: "connected with less than " + str(N) + " CER"})
+				messages.append({m: "VS instance must be connected with at least " + str(N) + " CER"})
 		if(len(messages) > 0):
 			result = {'error':{'messages': messages}}
 		
