@@ -12,6 +12,7 @@ class oshi():
 	
 	def validate(self, topology):
 		print "validate oshi"
+		N = 2
 		result = {}
 		messages = []
 		
@@ -23,7 +24,7 @@ class oshi():
 			if(nodes[n]['info'].get('type',"") == "VS"):
 				mappVS[n] = 0
 
-		### verifica che ogni nodo VS ha almeno tre CER
+		### verifica che ogni nodo VS ha almeno N CER
 		for e in edges.keys():
 			enodes = e.split('&&')
 			nodef = enodes[0]
@@ -38,8 +39,8 @@ class oshi():
 					mappVS[VS] = mappVS[VS] + 1
 
 		for m in mappVS.keys():
-			if(mappVS[m] < 3):
-				messages.append({m: "connected with less than three CER"})
+			if(mappVS[m] < N):
+				messages.append({m: "connected with less than " + str(N) + " CER"})
 		if(len(messages) > 0):
 			result = {'error':{'messages': messages}}
 		
