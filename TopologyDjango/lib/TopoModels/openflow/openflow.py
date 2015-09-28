@@ -74,11 +74,15 @@ class openflow():
 
 		self.layer_constraints["Data"] = {
             "multihoming": "false",
-
+            "not_allowed_edge":[
+            	{"source" : "OF Controller", "not_allowed_des": ["OFL2sw", "Host", "OF Controller"]},
+            	{"source" : "OFL2sw", "not_allowed_des": ["OF Controller"]},
+            	{"source" : "Host", "not_allowed_des": ["OF Controller"]}
+            	],
 			"edges-properties": {
 				"bw": ""
 			  }
-			}
+		}
 		
 
 		
