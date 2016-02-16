@@ -1,9 +1,14 @@
 import pkgutil
 import sys
 import os
+from os.path import join
 import imp
 import json
 import re
+import rrdtool
+import tempfile
+import simplejson as json
+
 #from TopoModels.oshi.oshi import oshi
 
 class ModelController():
@@ -84,8 +89,6 @@ class ModelController():
 				#raise e
 				#print e
 				messages.append({'Node-'+n : 'Node properties not found.'})
-				
-
 		print messages
 
 		if(len(messages) > 0):
@@ -139,6 +142,90 @@ class ModelController():
 
 		if(len(messages) > 0):
 			result = {'error':{'messages': messages}}
+		return result
+
+	def getGraph(self,arg1,arg2,arg3):
+		print arg1
+		print arg2
+		print arg3
+		print "sono qua"
+		path = "/home/user/workspace/OSHI-monitoring/rrd/" 
+		dirs = os.listdir(path);
+		list_info =[]
+		for key in dirs:
+			if(key.find(arg1) != -1):
+				print key
+				list_info.append(key)
+
+		if(len(list_info) == 0):
+			print "haven't a data"
+			result = {'message':0 }
+			return result
+
+		print "send"
+		url = "http://127.0.0.1:8000/rrdtool/" + arg1 + "/rrdgraph/?rrd_data_source=" + arg3 +"&time_scale=" + arg2 + "&graph_title=" + arg1 + "_"+ arg3
+
+		print url
+		result = {'message': url}
+		return result
+
+
+	def getValue(self,node_id):
+		result = {}
+		message = []
+		print node_id
+		path = "/home/user/workspace/OSHI-monitoring/rrd/" 
+		dirs = os.listdir(path);
+		list_info =[]
+		for key in dirs:
+			if(key.find(node_id) != -1):
+				print key
+				source = join(path,key)
+				info = rrdtool.info(source)
+				list_info.append(info)
+		if (len(list_info) == 0):
+			print "we haven't data"
+			result  = {'message': 0 }
+			return result
+	
+		for keys in list_info:
+			temp  = []
+			temp.append({'node_id' : keys['filename'].replace(path,"")})
+			temp.append({'rx_bytes' : keys['ds[rx_bytes].last_ds']})
+			temp.append({'tx_bytes' : keys['ds[tx_bytes].last_ds']})
+			temp.append({'rx_packets' : keys['ds[rx_packets].last_ds']})
+			temp.append({'tx_packets' : keys['ds[tx_packets].last_ds']})
+			temp.append({'sdn_rx_bytes' : keys['ds[sdn_rx_bytes].last_ds']})
+			temp.append({'sdn_tx_bytes' : keys['ds[sdn_tx_bytes].last_ds']})
+			temp.append({'sdn_rx_packets' : keys['ds[sdn_rx_packets].last_ds']})
+			temp.append({'sdn_tx_packets' : keys['ds[sdn_tx_packets].last_ds']})
+			message.append(temp)
+		if(len(message)>0):
+			print "mando dati"
+			result = {'message':message}
+		return result
+
+
+	def getFileAvaible(self,arg1,arg2):
+		print arg1
+		print arg2
+		path = "/home/user/workspace/OSHI-monitoring/rrd/" 
+		dirs = os.listdir(path);
+		list_info =[]
+		for key in dirs:
+			if((key.find(arg1) != -1) or (key.find(arg2) != -1)):
+				print key
+				y = key.replace(".rrd","")
+				list_info.append(y)
+		if(len(list_info) == 0):
+			print "haven't a data"
+			result = {'message':0 }
+			return result
+		list_info.sort()
+		# for key in list_info:
+		# 	print key
+		print "send data file avaible"
+		result = {'message' : list_info}
 		return result
 
 

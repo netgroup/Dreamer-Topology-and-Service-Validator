@@ -16,5 +16,8 @@ urlpatterns = patterns('',
 	url(r'^getSpecModel/$',"TopologyDjango.views.getSpecModel"),
 	url(r'^getRandom/$',"TopologyDjango.views.getRandom"),
 	url(r'^validateTopology$',"TopologyDjango.views.validate"),
+	url(r'^getValueNode$',"TopologyDjango.views.getValue"),
+	url(r'^getGraph$',"TopologyDjango.views.getGraph"),
+	url(r'^getFileAvaible$',"TopologyDjango.views.getFileAvaible")
 
 )
